@@ -26,8 +26,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        settings = new PhoneSettings(getApplicationContext());
-        parsing = new parseData();
+        parsing = new parseData(getApplicationContext());
+
         button = (Button) findViewById(R.id.button);
         b2 = (Button) findViewById(R.id.button2);
         b3 = (Button) findViewById(R.id.button3);
@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mac = settings.getMac();
+                String mac = parsing.getMac();
                 Toast.makeText(getApplicationContext(), mac, Toast.LENGTH_LONG).show();
 
                 new Thread() {
@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
                         super.run();
                         try {
                             JSONObject json = new JSONObject(parsing.SendGeoInform());
-                            System.out.println("lat : " + json.get("lat") + ", lng : " + json.get("lng") + "accuracy : " + json.get("accuracy"));
+                            System.out.println(json.toString());
                         } catch (JSONException | IOException e) {
                             e.printStackTrace();
                         }
