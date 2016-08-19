@@ -32,9 +32,11 @@ import cz.msebera.android.httpclient.Header;
 public class parseData extends PhoneSettings {
     String url = "http://openapi.seoul.go.kr:8088/496b4f4f726b6d73313031447776697a/json/SearchPublicToiletPOIService/1/1000/";
     String geoUrl = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCrnwlSqC7aZsHRu93y9eRJx6Jeteih2dw";
+    PhoneSettings settings;
 
     public parseData() {
         super();
+        settings = new PhoneSettings();
     }
 
     public Map<String, Object> setGeoInform() {
@@ -44,9 +46,9 @@ public class parseData extends PhoneSettings {
         Map<String, Object> cellTowers = new HashMap<>();
         Map<String, Object> CellInfo = new HashMap<>();
 
-        ArrayList<String> mcc_mcn = getMcc();
+        ArrayList<String> mcc_mcn = settings.getMcc();
 
-        wifiAccessPoints.put("macAddress", getMac());
+        wifiAccessPoints.put("macAddress", settings.getMac());
         wifiAccessPoints.put("signalStrength", wifiInfo.getRssi());
 
         cellTowers.put("cellId", String.valueOf(gsmCellLocation.getCid()));

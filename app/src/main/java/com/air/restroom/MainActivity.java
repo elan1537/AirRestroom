@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mac = parsing.getMac();
+                String mac = settings.getMac();
                 Toast.makeText(getApplicationContext(), mac, Toast.LENGTH_LONG).show();
 
                 new Thread() {
