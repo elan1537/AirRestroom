@@ -39,32 +39,56 @@ public class parseData extends PhoneSettings {
     }
 
     public Map<String, Object> setGeoInform() {
-        List<Map<String, Object>> cellT = new ArrayList<>();
-        List<Map<String, Object>> wifi = new ArrayList<>();
-        Map<String, Object> wifiAccessPoints = new HashMap<>();
-        Map<String, Object> cellTowers = new HashMap<>();
-        Map<String, Object> CellInfo = new HashMap<>();
+        List<Map<String, Object>> cellT;
+        List<Map<String, Object>> wifi;
+        Map<String, Object> wifiAccessPoints;
+        Map<String, Object> cellTowers;
+        Map<String, Object> CellInfo;
 
-        ArrayList<String> mcc_mcn = getMcc();
+        try {
+            cellT = new ArrayList<>();
+            wifi = new ArrayList<>();
+            wifiAccessPoints = new HashMap<>();
+            cellTowers = new HashMap<>();
+            CellInfo = new HashMap<>();
 
-        wifiAccessPoints.put("macAddress", getMac());
-        wifiAccessPoints.put("signalStrength", wifiInfo.getRssi());
+            ArrayList<String> mcc_mcn = getMcc();
 
-        cellTowers.put("cellId", String.valueOf(gsmCellLocation.getCid()));
-        cellTowers.put("locationAreaCode", String.valueOf(gsmCellLocation.getLac()));
-        cellTowers.put("mobileCountryCode", mcc_mcn.get(0));
-        cellTowers.put("mobileNetworkCode", mcc_mcn.get(1));
+            wifiAccessPoints.put("macAddress", getMac());
+            wifiAccessPoints.put("signalStrength", wifiInfo.getRssi());
 
-        cellT.add(cellTowers);
-        wifi.add(wifiAccessPoints);
+            cellTowers.put("cellId", String.valueOf(gsmCellLocation.getCid()));
+            cellTowers.put("locationAreaCode", String.valueOf(gsmCellLocation.getLac()));
+            cellTowers.put("mobileCountryCode", mcc_mcn.get(0));
+            cellTowers.put("mobileNetworkCode", mcc_mcn.get(1));
 
-        CellInfo.put("homeMobileCountryCode", 450);
-        CellInfo.put("homeMobileNetworkCode", 5);
-        CellInfo.put("radioType", "wcdma");
-        CellInfo.put("carrier", "SKT");
-        CellInfo.put("considerIp", "true");
-        CellInfo.put("cellTowers", cellT);
-        CellInfo.put("wifiAccessPoints", wifi);
+            cellT.add(cellTowers);
+            wifi.add(wifiAccessPoints);
+
+            CellInfo.put("homeMobileCountryCode", 450);
+            CellInfo.put("homeMobileNetworkCode", 5);
+            CellInfo.put("radioType", "wcdma");
+            CellInfo.put("carrier", "SKT");
+            CellInfo.put("considerIp", "true");
+            CellInfo.put("cellTowers", cellT);
+            CellInfo.put("wifiAccessPoints", wifi);
+
+        } catch(StringIndexOutOfBoundsException ex) {
+            wifi = new ArrayList<>();
+            CellInfo = new HashMap<>();
+            wifiAccessPoints = new HashMap<>();
+
+            wifiAccessPoints.put("macAddress", getMac());
+
+            wifi.add(wifiAccessPoints);
+
+            CellInfo.put("homeMobileCountryCode", 450);
+            CellInfo.put("homeMobileNetworkCode", 5);
+            CellInfo.put("radioType", "wcdma");
+            CellInfo.put("carrier", "SKT");
+            CellInfo.put("considerIp", "true");
+            CellInfo.put("wifiAccessPoints", wifi);
+        }
 
         return CellInfo;
     }
