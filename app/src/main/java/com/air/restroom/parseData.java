@@ -31,8 +31,30 @@ import java.util.Map;
 import cz.msebera.android.httpclient.Header;
 
 public class parseData extends PhoneSettings {
+    int count = 0;
+    Location lastLocation;
+    LocationListener locationListener;
     String url = "http://openapi.seoul.go.kr:8088/496b4f4f726b6d73313031447776697a/json/SearchPublicToiletPOIService/1/1000/";
     String geoUrl = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCrnwlSqC7aZsHRu93y9eRJx6Jeteih2dw";
+
+    private double langitude;
+    private double longitude;
+
+    public double getLangitude() {
+        return langitude;
+    }
+
+    public void setLangitude(double langitude) {
+        this.langitude = langitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
     public parseData(Context applicationContext) {
         super(applicationContext);
@@ -102,11 +124,17 @@ public class parseData extends PhoneSettings {
         Log.d("Main", "isGPSEnabled=" + isGPSEnabled);
         Log.d("Main", "isNetworkEnabled="+ isNetworkEnabled);
 
-        LocationListener locationListener = new LocationListener() {
+        locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 double lat = location.getLatitude();
                 double lng = location.getLongitude();
-                Log.d("Location", "lat : " + lat + ", lng : " + lng);
+
+                lastLocation = location;
+
+                setLangitude(lat);
+                setLongitude(lng);
+                Log.d("Location", "lat : " + lat + ", lng : " + lng + "count : " + count++);
+                locationManager.removeUpdates(locationListener);
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
