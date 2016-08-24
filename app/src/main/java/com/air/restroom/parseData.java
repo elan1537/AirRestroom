@@ -34,11 +34,18 @@ public class parseData extends PhoneSettings {
     int count = 0;
     Location lastLocation;
     LocationListener locationListener;
-    String url = "http://openapi.seoul.go.kr:8088/496b4f4f726b6d73313031447776697a/json/SearchPublicToiletPOIService/1/1000/";
     String geoUrl = "https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyCrnwlSqC7aZsHRu93y9eRJx6Jeteih2dw";
+
+    public JSONArray getToilets() {
+        return toilets;
+    }
+
+    JSONArray toilets;
+
 
     private double langitude;
     private double longitude;
+
 
     public double getLangitude() {
         return langitude;
@@ -185,30 +192,37 @@ public class parseData extends PhoneSettings {
         return EntityUtils.toString(resEntity);
     }
 
-    public void getToiletData(final ArrayList<SeoulToilet> toi) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new JsonHttpResponseHandler() {
+//    public ArrayList<JSONArray> getToiletData() {
+//        AsyncHttpClient client = new AsyncHttpClient();
+//
+//        ResponseHandler handler = new ResponseHandler();
+//        client.get(url, handler);
+//
+//        return handler.getList();
+//    }
 
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    JSONObject j = response.getJSONObject("SearchPublicToiletPOIService");
-                    JSONArray row = j.getJSONArray("row");
-
-                    for (int i = 0; i < row.length(); i++) {
-                        JSONObject item = (JSONObject) row.get(i);
-                        String POI_ID = item.get("POI_ID").toString();
-                        String FNAME = item.get("FNAME").toString();
-                        String ANAME = item.get("ANAME").toString();
-                        float X = Float.parseFloat(item.get("X_WGS84").toString());
-                        float Y = Float.parseFloat(item.get("Y_WGS84").toString());
-
-                        System.out.println(POI_ID + ", " + FNAME + ", " + ANAME + ", " + X + "," + Y);
-                        toi.add(new SeoulToilet(POI_ID, FNAME, ANAME, X, Y));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+//    class ResponseHandler extends JsonHttpResponseHandler{
+//        private ArrayList<JSONArray> list = new ArrayList<>();
+//
+//        public ResponseHandler() {
+//        }
+//
+//        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//            try {
+//                JSONObject j = response.getJSONObject("SearchPublicToiletPOIService");
+//                JSONArray row = j.getJSONArray("row");
+//                Log.d("onSuccess", row.toString());
+//
+//                list.add(row);
+//                Log.d("getList", list.get(0).toString());
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        public ArrayList<JSONArray> getList() {
+//            Log.d("getList", list.get(0).toString());
+//            return list;
+//        }
+//    }
 }

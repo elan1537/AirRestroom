@@ -1,7 +1,4 @@
 package com.air.restroom;
-
-import org.json.JSONObject;
-
 /**
  * Created by Pengpark on 2016. 8. 17..
  */
