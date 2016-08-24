@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AirRestroom.iml" filepath="$PROJECT_DIR$/AirRestroom.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android-async-http-1.4.9/android-async-http-1.4.9.iml" filepath="$PROJECT_DIR$/android-async-http-1.4.9/android-async-http-1.4.9.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
