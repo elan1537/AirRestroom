@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -54,9 +55,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void init() {
         data = new parseData(getApplicationContext());
         toilet = new JSONArray();
-        getToiletData();
-        JSONArray toilet = getToilet();
-        Log.d("Init", toilet.toString());
+        Log.d("Init", loadJSONFromAsset());
 
         new Thread() {
             @Override
@@ -112,38 +111,20 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return c;
     }
 
-    public void getToiletData() {
-        String url = "http://openapi.seoul.go.kr:8088/496b4f4f726b6d73313031447776697a/json/SearchPublicToiletPOIService/1/1000/";
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(url, new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONObject j;
-                JSONArray row = null;
-                try {
-                    j = response.getJSONObject("SearchPublicToiletPOIService");
-                    row = j.getJSONArray("row");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Log.d("lala", row.toString());
-                setToilet(row);
-            }
-        });
-    }
-
-    public void setToilet(JSONArray toilet) {
-        this.toilet = toilet;
-    }
-
-    public JSONArray getToilet() {
-        return this.toilet;
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = this.getAssets().open("sipal.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 }
 //        mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(coords[0], coords[1]), 7, true);
