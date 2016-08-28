@@ -50,7 +50,7 @@ public class CloudAdapter implements CalloutBalloonAdapter {
         SeoulToilet toilet = null;
 
         for(SeoulToilet toilet1 : list) {
-            if(toilet1.getX() == latitude && toilet1.getY() == longitude) {
+            if(toilet1.getY() == latitude && toilet1.getX() == longitude) {
                 toilet = toilet1;
             }
         }
@@ -63,6 +63,8 @@ public class CloudAdapter implements CalloutBalloonAdapter {
         ImageView img1_ = (ImageView)view.findViewById(R.id.image_person);
         ImageView img2_ = (ImageView)view.findViewById(R.id.image_disable);
         ImageView img3_ = (ImageView)view.findViewById(R.id.image_isopen);
+
+
 
         tv3.setText(toilet.getANAME());
         title.setText(toilet.getFNAME());
@@ -84,7 +86,7 @@ public class CloudAdapter implements CalloutBalloonAdapter {
         SeoulToilet toilet = null;
 
         for(SeoulToilet toilet1 : list) {
-            if(toilet1.getX() == latitude && toilet1.getY() == longitude) {
+            if(toilet1.getY() == latitude && toilet1.getX() == longitude) {
                 toilet = toilet1;
             }
         }

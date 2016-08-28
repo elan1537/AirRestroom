@@ -16,7 +16,7 @@ public class GetGeoData extends Service {
     private ArrayList<SeoulToilet> seoulToilets;
     private double[] coords;
     CloudAdapter cloudAdapter;
-    parseData data;
+    ParseData data;
 
     public ArrayList<SeoulToilet> getSeoulToilets() {
         return seoulToilets;
@@ -32,7 +32,7 @@ public class GetGeoData extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         seoulToilets = new ArrayList<>();
-        data = new parseData(getApplicationContext());
+        data = new ParseData(getApplicationContext());
 
         new Thread() {
             @Override
