@@ -30,7 +30,7 @@ import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
-public class parseData extends PhoneSettings {
+public class ParseData extends PhoneSettings {
     int count = 0;
     Location lastLocation;
     LocationListener locationListener;
@@ -63,7 +63,7 @@ public class parseData extends PhoneSettings {
         this.longitude = longitude;
     }
 
-    public parseData(Context applicationContext) {
+    public ParseData(Context applicationContext) {
         super(applicationContext);
     }
 
